@@ -64,6 +64,7 @@ export default {
     },
 
     buildModules: [
+        '@nuxt/postcss8',
         '@nuxtjs/eslint-module',
         '@nuxtjs/fontawesome',
         '@nuxtjs/tailwindcss',
@@ -78,6 +79,8 @@ export default {
         postcss: {
             plugins: {
                 tailwindcss: 'tailwind.config.js',
+                autoprefixer: {},
+                ...(process.env.APP_ENV === 'production' ? { cssnano: {} } : {}),
             },
         },
     },
