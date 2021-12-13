@@ -32,11 +32,12 @@ export default {
 
     css: [
         '@/assets/main.scss',
+        { src: '@/assets/ant/main.less', lang: 'less' },
         '@fortawesome/fontawesome-free/css/all.css',
     ],
 
     plugins: [
-        '@/plugins/element-ui',
+        '@/plugins/ant-design',
         '@/plugins/filters',
     ],
 
@@ -75,13 +76,34 @@ export default {
     ],
 
     build: {
-        transpile: [/^element-ui/],
         postcss: {
             plugins: {
                 tailwindcss: 'tailwind.config.js',
                 autoprefixer: {},
                 ...(process.env.APP_ENV === 'production' ? { cssnano: {} } : {}),
             },
+        },
+        loaders: {
+            less: {
+                javascriptEnabled: true,
+                modifyVars: {
+                    'primary-color': 'rgba(222, 12, 101, 1.0)',
+                    'component-background': '#ffffff',
+                },
+            },
+        },
+        babel: {
+            plugins: [
+                [
+                    'import',
+                    {
+                        libraryName: 'ant-design-vue',
+                        libraryDirectory: 'es',
+                        style: true,
+                    },
+                    'ant-design-vue',
+                ],
+            ],
         },
     },
 
